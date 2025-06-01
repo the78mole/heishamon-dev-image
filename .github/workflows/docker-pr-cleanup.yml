@@ -1,0 +1,23 @@
+name: Delete PR Image
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  delete-image:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - name: Delete image from GHCR
+        run: |
+          IMAGE="ghcr.io/${{ github.repository }}/heishamon-dev:pr-${{ github.event.pull_request.number }}"
+          echo "Deleting $IMAGE..."
+          curl -X DELETE \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            "https://ghcr.io/v2/${{ github.repository }}/arduino-cli/manifests/$( \
+              curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              https://ghcr.io/v2/${{ github.repository }}/arduino-cli/tags/list \
+              | jq -r --arg tag "pr-${{ github.event.pull_request.number }}" '.tags[] | select(. == $tag)')"
