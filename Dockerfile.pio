@@ -28,5 +28,11 @@ RUN python3 -m pip install --user pipx --break-system-packages \
 WORKDIR /home/${USERNAME}
 USER ${USERNAME}
 
+# The platformio.ini is only for pre-installing the approprite packages for heishamon
+COPY platformio.ini.inst /home/${USERNAME}/platformio.ini
+ENV PIO_CORE_DIR=/home/${USERNAME}/.platformio
+ENV PATH="/home/${USERNAME}/.local/bin:${PATH}"
+RUN pio pkg install && rm platformio.ini
+
 # Standardkommando
 CMD ["arduino-cli"]
