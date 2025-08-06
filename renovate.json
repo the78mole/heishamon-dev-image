@@ -4,11 +4,15 @@
   ],
   "enabledManagers": [
     "dockerfile",
-    "github-actions"
+    "github-actions",
+    "platformio"
   ],
   "labels": ["dependencies"],
   "dependencyDashboard": true,
   "dependencyDashboardTitle": "📦 Renovate Dependency Dashboard",
+  "platformio": {
+    "fileMatch": ["(^|/)platformio\\.ini(\\..*)?$"]
+  },
   "packageRules": [
     {
       "matchUpdateTypes": ["major"],
@@ -19,6 +23,20 @@
       "matchUpdateTypes": ["minor", "patch"],
       "groupName": "🔧 Minor and Patch Updates",
       "automerge": true
+    },
+    {
+      "matchManagers": ["platformio"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "🔌 PlatformIO Major Updates",
+      "automerge": false,
+      "labels": ["platformio", "major"]
+    },
+    {
+      "matchManagers": ["platformio"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "⚡ PlatformIO Minor/Patch Updates",
+      "automerge": true,
+      "labels": ["platformio", "minor-patch"]
     }
   ]
 }
