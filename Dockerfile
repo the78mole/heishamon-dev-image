@@ -18,4 +18,4 @@ WORKDIR /home/${USERNAME}
 USER ${USERNAME}
 
 # Standardkommando
-CMD ["arduino-cli"]
+CMD ["arduino-cli", "version"]

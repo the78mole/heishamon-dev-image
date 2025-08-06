@@ -35,4 +35,4 @@ ENV PATH="/home/${USERNAME}/.local/bin:${PATH}"
 RUN pio pkg install && rm platformio.ini
 
 # Standardkommando
-CMD ["arduino-cli"]
+CMD ["pio", "system", "info"]
